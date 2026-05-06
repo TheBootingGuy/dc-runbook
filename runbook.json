@@ -24,7 +24,6 @@
         "bt patch panel"
       ],
       "steps": [
-        "wash your hands",
         "Scrub the ticket to understand scope, endpoints, and fault details.",
         "Confirm maintenance window and impact approval if required.",
         "Identify start device and end device from the ticket.",
