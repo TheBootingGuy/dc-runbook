@@ -1,0 +1,632 @@
+{
+  "version": "0.4",
+  "lastUpdated": "2026-05-05",
+  "entries": [
+    {
+      "id": "replace-single-mode-fiber-bt-bt",
+      "title": "Replace Single Mode Fiber Cable (BT to BT)",
+      "category": "network",
+      "keywords": [
+        "replace single mode fiber", "smf", "single mode fiber cable", "bt to bt",
+        "bt0", "bt1", "mpo", "mmc", "fiber replace", "121012", "livelinkmitigation",
+        "link down", "fiber cable bt", "replace fiber", "bt patch panel"
+      ],
+      "steps": [
+        "Scrub the ticket to understand scope, endpoints, and fault details.",
+        "Confirm maintenance window and impact approval if required.",
+        "Identify start device and end device from the ticket.",
+        "Gather required tools: fiber inspection scope, approved fiber cleaning kit, PPE (eye protection), labels if replacement cable is required.",
+        "Open Power BI BT to BT, refresh the dataset, enter start device and end device, validate full optical path and confirm patch panels, fiber types, and hop order.",
+        "Arrive at BT0 device-side location, verify correct asset tag against ticket.",
+        "Verify link and activity lights present prior to action.",
+        "Unseat the optic and MPO fiber cable.",
+        "Inspect optic and MPO endface using fiber scope.",
+        "Clean optic and MPO cable using approved cleaning method.",
+        "Perform visual check and confirm 4 lights present, then reseat optic and MPO cable securely.",
+        "Arrive at BT Patch Panel, verify correct panel and port.",
+        "Unseat MPO cable, inspect and clean MPO connector, reseat MPO cable and confirm proper alignment.",
+        "Arrive at BT1 Patch Panel, verify correct panel and port.",
+        "Unseat MMC cable from the front, verify 8 lights present.",
+        "Unseat MMC cable from the back side, inspect and clean MMC connectors.",
+        "Verify 8 lights present after cleaning and reseat.",
+        "Arrive at BT1 device-side location, verify correct asset tag.",
+        "Unseat MPO cable, inspect and clean MMO connector, verify 4 lights present, reseat MPO cable securely.",
+        "Check other 3 associated BT1 MPO cables and reseat them at BT1 switch (color coordinated).",
+        "Verify optical link comes UP end-to-end, confirm no alarms or faults present.",
+        "Validate link status in Power BI and monitoring tools.",
+        "Perform final visual inspection of all touched connections.",
+        "Document all actions taken: cleaning performed, light verification, reseats, confirm successful link restoration, close ticket or return to monitoring state."
+      ]
+    },
+    {
+      "id": "clean-scope-single-mode-fiber",
+      "title": "Clean and Scope Single Mode Fiber Cable",
+      "category": "network",
+      "keywords": [
+        "clean and scope", "clean single mode fiber", "smf", "optic clean", "fiber clean",
+        "scope fiber", "clean scope", "link down", "link degraded", "optic contamination",
+        "fiber inspection", "reseat optic", "121011", "clean fiber cable"
+      ],
+      "steps": [
+        "Scrub the ticket to confirm scope of work, reported issue (link down or degraded link), and correct asset and location. Review prior ticket notes and alerts if present.",
+        "Proceed to datacenter location (Site, Room, Row, Rack, RU), perform visual inspection to confirm rack and node position.",
+        "Verify the correct device by confirming asset tag and location.",
+        "Identify affected port and optic, observe link status indicators and confirm link is down or degraded.",
+        "Inspect port and optic for visible damage or contamination.",
+        "Unseat and remove the optic, inspect removed optic for visible damage.",
+        "Remove cable identified from optic.",
+        "Clean cable end and clean optic using approved cleaning tools.",
+        "Reseat optic ensuring it is fully seated, properly oriented, and secure in the port.",
+        "Reseat the associated cable.",
+        "Verify link comes up successfully: check port LEDs and confirm link status is normal.",
+        "Observe for a short stabilization period to ensure no flapping or errors.",
+        "Update the ticket with asset tag, location, and validation results."
+      ]
+    },
+    {
+      "id": "investigate-link-link-down-mitigation",
+      "title": "Device: Investigate Link / Link Down Mitigation",
+      "category": "network",
+      "keywords": [
+        "investigate link", "link down mitigation", "linkdownmitigation", "link down",
+        "link degraded", "bt-bt", "bt-server", "121013", "sev 3", "fiber investigate",
+        "device investigate link", "link investigation", "link not up", "link failure"
+      ],
+      "steps": [
+        "Scrub the ticket and confirm the full scope of work: confirm ticket type, fault code, severity, and that instruction is to follow runbook guidance.",
+        "Validate scope: confirm link is between source port and destination port, check for no active maintenance window, no approved outage, review prior ticket notes and alerts.",
+        "Open Power BI dashboards (BT-BT or BT-Server Azure HPC AI FWLinkValidationReport) and confirm link status is Down with no flapping or intermittent recovery. If link shows Up, document and move to closure.",
+        "Navigate to source location: confirm datacenter, rack location, device, asset tag, and port.",
+        "Inspect source side: check cable fully seated, no bent pins or loose latch, fiber ends (no dust, scratches, oil). Reseat cable securely, clean fiber if contamination suspected, confirm cable routing matches labeling.",
+        "Navigate to destination location: confirm datacenter, rack location, device, asset tag, and port.",
+        "Inspect destination side: inspect port and connector condition, reseat cable, clean fiber if needed, confirm correct port mapping.",
+        "Validate cable integrity: confirm correct cable type (optical/AOC/DAC), no visible damage along cable path. If damage suspected, replace with known-good cable ensuring proper slack and no strain.",
+        "Wait for link renegotiation, check port LEDs and Power BI/PhyNet status, confirm link is Up with no CRC errors or instability.",
+        "If link remains down, escalate per runbook: suspect optic/transceiver, line card, or port hardware. Document all troubleshooting steps performed.",
+        "Update DCCentral ticket: include source and destination asset tags, exact rack locations, ports involved, actions performed (reseated/cleaned/replaced), part details if replaced, tools used, final link status, and stability confirmation."
+      ]
+    },
+    {
+      "id": "investigate-mpo-trunk-cable-miswire",
+      "title": "Investigate MPO Trunk Cable (Miswire / Link Loss)",
+      "category": "network",
+      "keywords": [
+        "mpo trunk", "miswire", "mpo miswire", "patch port swap", "serverpatchportswap",
+        "mpo trunk cable", "links down", "multiple links down", "kraken", "miswired",
+        "link loss", "mpo investigate", "trunk cable", "patch swap"
+      ],
+      "steps": [
+        "Navigate to the rack and verify asset tag, confirm device and U-position.",
+        "Confirm reported symptom: links down or miswired connection per ticket description.",
+        "Review ticket-provided guidance including any ServerPatchPortSwap instructions and identify current patching for affected ports.",
+        "Visually trace MPO trunk from server optic to MPO trunk to patch panel to Kraken harness to BT0.",
+        "Check for obvious misrouting, crossed labels, or incorrect port termination. Verify labeling matches documented port assignments.",
+        "Carefully disconnect MPO connections for affected ports.",
+        "Swap connections exactly as specified in ticket instructions, ensure MPO connectors are fully seated and latched.",
+        "If connectors appear contaminated, clean MPO ends using approved fiber cleaning tools and reseat all affected MPO connections end-to-end.",
+        "Check link status via monitoring dashboard or local LEDs, confirm reduced or cleared link-down count.",
+        "Verify no new lanes or links are impacted.",
+        "If links are restored: document successful patch swap and link recovery. If links remain down: pause further changes and escalate with findings.",
+        "Document resolution including: ticket ID, asset tag, location, patch correction performed, Power BI confirmation, any residual issues isolated and escalated."
+      ]
+    },
+    {
+      "id": "reseat-sfp-optic",
+      "title": "Reseat SFP Optic",
+      "category": "network",
+      "keywords": [
+        "reseat sfp", "sfp optic", "sfp reseat", "nic inactive", "nica2", "no link light",
+        "optic reseat", "sfp", "qsfp reseat", "port no light", "reseat optic",
+        "link light out", "optic investigation", "nic no link"
+      ],
+      "steps": [
+        "Start task, verify the server asset tag against the ticket and physical device.",
+        "Confirm reported issue by checking NIC status and observe that the affected NIC is inactive with all lights out.",
+        "Inspect the MPO cable and optic ports at the source location.",
+        "Clean MPO connectors and optic ports using approved fiber cleaning tools.",
+        "Reseat the MPO cable and optic, check for port light activity after reseat.",
+        "If no port light observed, remove the existing SFP optic, install a known-good SFP optic, and recheck for port light activity.",
+        "If still no light, trace the full fiber path from the host to BT0 location, inspect the Kraken cable.",
+        "Observe light transmission through the cable and document number of lights visible.",
+        "Perform a loopback test from the patch panel to PRD and verify whether link light comes up during loopback.",
+        "If loopback works, remove the switch hood following ESD and safety procedures, reseat the switch and sideband cable, reassemble and recheck link status.",
+        "Document findings including all steps performed, loopback results, and escalate to Infrastructure/Networking team if issue is determined to be a bad Kraken cable or upstream infrastructure issue."
+      ]
+    },
+    {
+      "id": "reseat-multi-mode-fiber",
+      "title": "Reseat Multi Mode Fiber Cable",
+      "category": "network",
+      "keywords": [
+        "reseat multi mode fiber", "mmf", "multi mode fiber", "mmo cable", "mpo reseat",
+        "fiber reseat", "121012", "livelinkmitigation", "reseat mmf", "link down mmf",
+        "multimode", "multi-mode fiber reseat", "fiber hop", "all hops reseat"
+      ],
+      "steps": [
+        "Verify asset tag matches ticket, confirm ports match ticket, and confirm correct racks.",
+        "Check for loose connections, damaged fiber, and dirty optics.",
+        "Trace MMF cable from source switch to patch panel to destination, identify any intermediate cross-connects. All hops MUST be included in reseat per runbook.",
+        "Carefully disconnect fiber cable from source port, destination port, and intermediate ports if present. Do NOT pull on fiber strand or contaminate connectors.",
+        "Clean all fiber connectors and transceiver ports using approved fiber cleaning tools.",
+        "Reconnect in same order: intermediate hops first, then destination port, then source port. Ensure click/secure fit, proper polarity (A/B alignment), and no excessive bend.",
+        "Perform reseat for all listed ports and any additional linked interfaces.",
+        "Verify link status: link light active, no amber/red alerts. Check dashboard (Power BI/Fairwater) if available.",
+        "Confirm link restored and stabilized.",
+        "If link remains down after reseat, physical damage found, asset mismatch, or repeat ticket conditions detected, escalate.",
+        "Document work performed: arrived at location, verified asset tags, traced MMF cable path, removed cables, cleaned all fiber connectors, reseated cables ensuring proper polarity, repeated for all interfaces, verified link lights active, link restored and stabilized."
+      ]
+    },
+    {
+      "id": "reseat-unknown-network-cable",
+      "title": "Reseat Unknown Network Cable",
+      "category": "network",
+      "keywords": [
+        "reseat cable", "reseat network cable", "121012", "fault 121012", "cable reseat",
+        "unknown network cable", "reseat only", "etp reseat", "link reseat", "port reseat",
+        "reseat fiber", "lc fiber reseat", "reseat connection"
+      ],
+      "steps": [
+        "Confirm you are working the correct task: verify task ID, fault code (121012 Reseat Cable), and status.",
+        "Verify source asset tag, serial, device name, and location (datacenter, colocation, tile, rack, side/slot).",
+        "Verify destination asset for reference only (no coordination required with remote site for cross-site tickets).",
+        "Identify the link ports: source port and destination port from the ticket.",
+        "Breakout cable safety check (CRITICAL): inspect the link path and identify any breakout point. Only reseat the cable/optic at the device port listed. Do NOT remove optics or cables upstream of a breakout.",
+        "Go to the rack, scan or manually verify the asset tag using DC Central, confirm device name and port labeling match the ticket.",
+        "Locate the specified port on the source device.",
+        "Carefully reseat the network cable: remove the cable from the port, inspect visually for bent pins or obvious damage (no cleaning), reinsert the same cable fully until seated.",
+        "If an optic is present, reseat the optic into the port (no removal unless required to reseat), ensure it is fully locked in place.",
+        "Verify cable is fully seated, properly latched, and not under strain or bent sharply. Confirm no adjacent links were disturbed.",
+        "Do NOT run FCS tests: FCS runs automatically after ticket closure, cross-site validation occurs after both sides close.",
+        "Document in Resolution Details: action performed (reseated network cable on source port), asset tag, serial, rack/location, and confirmation statement that cable reseat completed per Fault Code 121012 with no additional actions performed.",
+        "Verify documentation is complete, submit resolution details, and close the task."
+      ]
+    },
+    {
+      "id": "replace-failed-optic",
+      "title": "Replace Failed Optic and Restore Link",
+      "category": "network",
+      "keywords": [
+        "replace optic", "failed optic", "optic replacement", "link down optic",
+        "replace sfp", "replace qsfp", "optic failed", "bad optic", "optic fault",
+        "replace transceiver", "install optic", "new optic", "optic rma"
+      ],
+      "steps": [
+        "Scrub the ticket to confirm scope of work (optic replacement), reported issue (link down or degraded link), and correct asset and location. Review prior ticket notes and alerts. Confirm replacement optic availability.",
+        "Submit part request through Logistics Chat and pick up replacement optic from Inventory Room 231.",
+        "Proceed to datacenter location, perform visual inspection to confirm rack and node position, verify correct asset tag.",
+        "Identify affected port and optic, observe link status indicators and confirm link is down or degraded.",
+        "Inspect port and optic for visible damage or contamination.",
+        "Apply ESD protection, unseat and remove the failed optic, inspect removed optic for visible damage, set aside for return/logistics processing.",
+        "Clean new optic and cords.",
+        "Install replacement optic: ensure optic is fully seated, properly oriented, and secure in the port. Reseat the associated cable if applicable.",
+        "Verify link comes up successfully: check port LEDs and confirm link status is normal. Observe for a short stabilization period to ensure no flapping or errors.",
+        "Log part consumption: consumed part ID and details.",
+        "Return removed optic to Logistics if required.",
+        "Update the ticket with: asset tag, location, removed optic ID, installed optic part number, and validation results."
+      ]
+    },
+    {
+      "id": "clean-scope-patch-panel-cable",
+      "title": "Clean and Scope Patch Panel Cable",
+      "category": "network",
+      "keywords": [
+        "clean and scope patch panel", "patch panel cable", "clean patch panel",
+        "patch panel fiber", "scope patch panel", "clean patch cable",
+        "patch panel clean", "patch panel investigate"
+      ],
+      "steps": [
+        "Scrub the ticket to confirm scope of work and correct asset and location.",
+        "Proceed to datacenter location and verify correct rack and asset tag.",
+        "Identify the affected patch panel port.",
+        "Inspect the patch panel cable and connector for contamination or damage.",
+        "Using fiber inspection scope, inspect connector endface.",
+        "Clean connector using approved fiber cleaning tool.",
+        "Re-inspect with scope to confirm endface is clean.",
+        "Reseat the cable in the patch panel port.",
+        "Verify link lights are present and active on both ends.",
+        "Update the ticket with asset tag, location, port, cleaning performed, and validation results."
+      ]
+    },
+    {
+      "id": "investigate-e1s-ruler-ssd",
+      "title": "Investigate E1.S Ruler SSD (NVMe Slow PCIe Link)",
+      "category": "hardware",
+      "keywords": [
+        "e1.s", "ruler ssd", "nvme slow", "pcie link", "62026", "fault 62026",
+        "nvme slow pcie", "e1s ssd", "csidiag", "ssd investigate", "nvme investigate",
+        "e1.s slot", "samsung ssd", "gb200 ssd", "nvme pcie fault"
+      ],
+      "steps": [
+        "Review CSIDiagnostic output indicating NVMe Slow PCIe Link fault, identify affected component (E1.S slot number and ruler SSD), confirm task is approved under applicable DCIS Waiver.",
+        "Navigate to rack location, scan and verify asset tag and serial, confirm correct SKU.",
+        "Confirm failed SSD location (slot number).",
+        "Follow ATL21 local EHS policy, apply ESD wrist strap, note if server lift is required due to no rail end stops.",
+        "Safely extend server using server lift, ensure stability before component interaction.",
+        "Allow approximately 30 seconds for PCIe/power state to settle prior to SSD handling.",
+        "Locate the affected E1.S ruler SSD slot.",
+        "Partially remove SSD to break electrical contact.",
+        "Inspect SSD connector and slot for debris or damage.",
+        "Reseat SSD fully ensuring proper connector engagement, secure SSD per retention design.",
+        "Reinsert server into rack using lift, confirm rail engagement and seating, return system to operational position. No parts replaced during investigation.",
+        "Document: verified asset, reseated E1.S ruler SSD to investigate NVMe slow PCIe link fault, no physical damage observed, no parts replaced. Ticket left InProgress pending signal/telemetry validation."
+      ]
+    },
+    {
+      "id": "investigate-osfp-board",
+      "title": "Investigate OSFP Board",
+      "category": "hardware",
+      "keywords": [
+        "osfp board", "121004", "investigate osfp", "nic a2", "nic links down",
+        "osfp investigate", "8 links down", "slot a2", "osfp module", "sideband cable",
+        "cage swap", "fairwater adx", "32 links", "nic investigation"
+      ],
+      "steps": [
+        "Verify ticket details: task ID, fault code 121004 (Investigate OSFP Board), scope is NIC A2 only.",
+        "Verify asset at rack: asset tag, rack location, confirm 8 links are DOWN on the specified slot. Ensure no other server ports will be touched. Prepare known-good optics and sideband cable if required.",
+        "STEP 1 - Reseat optics: locate the NIC slot, pull out and reseat all OSFP optics in this slot, observe status lights and link state. If lights are UP and links are UP, capture Fairwater ADX snapshot showing all 32 links UP and close ticket. If not, proceed to Step 2.",
+        "STEP 2 - Cage swap test (isolation): remove OSFP optics from the slot, insert the same optics into a different cage on the same node. If lights do NOT turn on in new cage, report findings and return optics to original location. If lights turn on and links come UP after returning, capture ADX snapshot and close ticket. Otherwise proceed to Step 3.",
+        "STEP 3 - Replace optics: replace existing optics with known-good verified healthy optics, ensure fully seated and correct orientation. If lights are UP and links are UP, capture ADX snapshot and close ticket. If not, proceed to Step 4.",
+        "STEP 4 - Reseat sideband cable: locate sideband cable for the NIC slot, reseat at both ends, inspect carefully for bent pins or connector damage, verify link status. If lights are UP and links are UP, capture ADX snapshot and close ticket. If not, proceed to Step 5.",
+        "STEP 5 - Replace sideband cable: replace the sideband cable with a verified good cable, confirm properly seated and strain-free, verify link state. If lights are UP and links are UP, capture ADX snapshot and close ticket. If not, proceed to Step 6.",
+        "STEP 6 - Replace OSFP module: replace the OSFP module associated with the NIC slot, ensure proper seating and orientation, verify status lights and link recovery.",
+        "Capture Fairwater ADX snapshot showing all 32 links UP.",
+        "Document in Resolution Details: steps performed (last successful step), confirmation that all links on the NIC slot are restored with ADX snapshot attached showing all 32 links UP, and that no other ports were impacted."
+      ]
+    },
+    {
+      "id": "reseat-dc-scm",
+      "title": "Reseat DC-SCM (Datacenter Secure Control Module)",
+      "category": "hardware",
+      "keywords": [
+        "dc-scm", "dc scm", "datacenter secure control module", "138000", "fault 138000",
+        "bmc", "oob access", "reseat dc-scm", "scm reseat", "server management module",
+        "dcscm", "bmc not responding", "oob not responding", "management module"
+      ],
+      "steps": [
+        "Verify asset is present in rack, ensure node and asset tag match ticket details.",
+        "Gather required tools: ESD wrist strap, server lift, standard datacenter tool kit, cart/safe work surface.",
+        "Navigate to rack location, verify asset tag, confirm correct node association. If mismatch, stop work and correct asset discrepancy before proceeding.",
+        "Request and receive approval to power down the server, confirm system is fully powered off and safe for service.",
+        "Apply ESD wrist strap, disconnect all external optics and cables, document cable placement for accurate reinstallation.",
+        "Utilize server lift to safely unseat system, remove server from rack, place on approved work surface (cart).",
+        "Remove top cover per standard procedure.",
+        "Locate DC-SCM module, remove DC-SCM from socket.",
+        "Inspect module and connector for debris, damage, and misalignment.",
+        "Reseat DC-SCM ensuring proper alignment and full and secure seating.",
+        "Reinstall top cover, re-rack server using server lift.",
+        "Reconnect all external cables and optics, ensure original configuration is maintained.",
+        "Request power on for the server, verify system response.",
+        "Confirm server is properly reassembled, has no loose connections, and responds to power request.",
+        "Escalate/block ticket if: server fails to power on after reseat, physical damage observed on DC-SCM or connector, or repeat fault condition persists. Escalate to DCIS Engineering or Hardware/Platform Team."
+      ]
+    },
+    {
+      "id": "replace-dc-scm",
+      "title": "Replace DC-SCM (Datacenter Secure Control Module)",
+      "category": "hardware",
+      "keywords": [
+        "replace dc-scm", "dc-scm replacement", "66007", "fault 66007", "dc scm replace",
+        "replace scm", "new dc-scm", "dbd dc-scm", "scm failure", "bmc replacement",
+        "dc-scm rma", "management module replace", "msf-118908"
+      ],
+      "steps": [
+        "Arrive at rack location, scan and verify asset tag and serial.",
+        "Review task to replace DC-SCM, note any license plate issues and coordinate with Logistics if needed.",
+        "Follow local EHS and ESD procedures, position server lift due to node weight and lack of end stops.",
+        "Disconnect all external cables per procedure.",
+        "Observe and document power state before proceeding, continue cautiously per procedure awareness.",
+        "Remove top cover carefully after inspection.",
+        "Remove failed DC-SCM.",
+        "Install replacement DC-SCM, ensure proper seating and internal cable routing prior to reassembly.",
+        "Reinstall top cover and confirm proper fit.",
+        "Reinstall node into rack using server lift.",
+        "Reconnect all external cables.",
+        "Power system back on per procedure.",
+        "Log failed DC-SCM as DBD per interim guidance: place failed DC-SCM into designated DBD locker and update Secure Bin Management."
+      ]
+    },
+    {
+      "id": "investigate-m2-nvme-ssd",
+      "title": "Investigate MB Onboard M.2 NVMe SSD",
+      "category": "hardware",
+      "keywords": [
+        "m.2 nvme", "m2 ssd", "mb onboard", "nvme slow", "62026", "fault 62026",
+        "m.2 investigate", "onboard ssd", "nvme m2", "motherboard ssd", "m2 slot",
+        "nvme pcie link", "csidiag nvme", "mzvl6960"
+      ],
+      "steps": [
+        "Review CSIDiagnostic indicating NVMe Slow PCIe Link fault, identify affected component as MB onboard M.2 NVMe SSD, confirm task is authorized under applicable DCIS Waiver. Verify repair action type: Investigate (no replacement authorized at this stage).",
+        "Navigate to rack location, scan and verify asset tag, serial, and confirm platform and SKU matched ticket details.",
+        "Follow local EHS procedures, apply ESD wrist strap, position server lift due to node weight and lack of end stops.",
+        "Disconnect external cables per procedure.",
+        "Remove node from rack using server lift, install temporary blanking panel to maintain airflow.",
+        "Remove top cover carefully and inspect for lid damage or bowing, broken or missing T-pins, loose debris inside chassis.",
+        "Locate motherboard onboard M.2 NVMe SSD.",
+        "Inspect SSD seating and retention hardware.",
+        "Reseat M.2 SSD to re-establish electrical contact.",
+        "Visually inspect connector and surrounding area for damage or contamination.",
+        "Reinstall top cover ensuring proper seating, reinstall node into rack using server lift.",
+        "Remove blanking panel and reconnect all external cables.",
+        "Document: investigation limited to reseat and inspection only per task scope, no parts replaced, system left ready for telemetry and signal validation. Further action pending post-reseat diagnostics."
+      ]
+    },
+    {
+      "id": "reseat-server-blade",
+      "title": "Reseat Server Blade (GB200F)",
+      "category": "hardware",
+      "keywords": [
+        "reseat server blade", "server blade", "gb200", "gb200f", "66001", "fault 66001",
+        "blade reseat", "c4a14", "c4a15", "reseat blade", "server reseat",
+        "msf-111838", "ingrasys", "blade server", "server node reseat"
+      ],
+      "steps": [
+        "Confirm task ID is not a repeat ticket within policy thresholds, verify repair action is Reseat (Server Blade), ensure asset is present in rack.",
+        "Gather required tools: ESD wrist strap, protective covers for OSFP cables, Philips screwdriver (PH2), Torx T10/T15, scanner, rack key if applicable, server lift if required, blanking panel/airflow blocker.",
+        "Navigate to rack location, scan asset tag, confirm serial and SKU. If mismatch, stop work and correct asset or update ticket before proceeding.",
+        "Apply ESD wrist strap, disconnect all external cables, label cables to ensure correct re-attachment, install protective covers on OSFP cables.",
+        "Unlock rails as required, carefully extend the blade out of the rack, ensure proper support using server lift if applicable.",
+        "Leave server extended and unpowered for 10 minutes to allow full shutdown and thermal/liquid stabilization.",
+        "Reinsert the server blade fully into the rack, ensure rails engage correctly, secure blade per rack design.",
+        "If the server was temporarily removed, install blanking panel(s)/airflow blockers immediately. Never leave open U-slots unattended.",
+        "Reconnect all labeled external cables, verify cables are fully seated, routed correctly, and free of strain or pinching.",
+        "Confirm server is properly seated, powered as expected, no visible faults or loose connections. Monitor briefly for abnormal behavior.",
+        "Document in ticket: verified asset tag and serial, disconnected and labeled external cables, extended GB200F server blade and allowed 10-minute drain period, reseated server blade into rack and secured rails, reconnected all external cables and verified proper seating. No additional issues observed post-reseat.",
+        "Escalate/block ticket if: asset not present in rack, repeat ticket criteria met, RM/CM related fault suspected, or post-reseat fault persists."
+      ]
+    },
+    {
+      "id": "replace-fpga",
+      "title": "FPGA Replacement",
+      "category": "hardware",
+      "keywords": [
+        "fpga", "fpga replacement", "fpga replace", "field programmable gate array",
+        "fpga failed", "fpga fault", "msf-103041", "fpga rma", "replace fpga",
+        "fpga card", "fpga board"
+      ],
+      "steps": [
+        "Scrub the ticket to confirm scope of work.",
+        "Identify required replacement part (FPGA part number from ticket).",
+        "Submit part request through Logistics Chat.",
+        "Pick up replacement FPGA from Inventory Room 231.",
+        "Proceed to node location and verify correct asset by confirming asset tag.",
+        "Request and receive power-off approval.",
+        "Verify unit is safely powered down.",
+        "Unseat and remove all optics and cables.",
+        "Unseat the blade from the chassis.",
+        "Disconnect the riser.",
+        "Remove failed FPGA and document part number and serial.",
+        "Install replacement FPGA and document new part number and serial.",
+        "Reconnect riser.",
+        "Reseat the blade into the chassis.",
+        "Reseat all optics and cables.",
+        "Power on the unit and verify system returns to normal working status.",
+        "Return failed FPGA to Logistics.",
+        "Log all completed work under appropriate WAL number and apply asset plate."
+      ]
+    },
+    {
+      "id": "replace-fpga-riser-cable",
+      "title": "Replace FPGA Riser Cable",
+      "category": "hardware",
+      "keywords": [
+        "fpga riser cable", "riser cable", "67203", "fault 67203", "ovl pcie",
+        "pcie link degradation", "roce low throughput", "replace riser", "riser replace",
+        "msf-118243", "glacier peak riser", "bianca module", "switch board riser"
+      ],
+      "steps": [
+        "Scrub the ticket to confirm fault code, scope of work (FPGA riser cable replacement), and affected node and asset tag.",
+        "Identify required replacement part (FPGA Riser Cable per ticket specification).",
+        "Submit part request via Logistics Chat and pick up replacement FPGA riser cable from Inventory Room 231.",
+        "Review applicable runbook and safety procedures.",
+        "Proceed to node location and verify the correct asset by confirming the asset tag.",
+        "Request and receive approval to power off the node, verify the unit is fully powered down and safe to service.",
+        "Disconnect all external optics and cables noting original placement, use a server lift to safely remove the node from the rack, place on an ESD-safe work surface.",
+        "Remove the top cover per procedure.",
+        "Locate the FPGA riser cable between the Glacier Peak riser and the applicable module/switch board.",
+        "Disconnect the existing FPGA riser cable and remove it. Document failed part number and serial.",
+        "Install the replacement FPGA riser cable. Ensure proper routing, secure seating at both endpoints, and no cable pinching or strain. Reconnect the riser. Reinstall the top cover.",
+        "Return the node to the rack using the server lift, reconnect all external cables and optics.",
+        "Power on the unit, verify the system returns to normal working status with no CSIDiag errors, no visible faults, and node operational per runbook expectations.",
+        "Return the failed FPGA riser cable to Logistics, log all work performed under appropriate WAL number, apply asset plate if applicable, update ticket with clear completion and validation notes."
+      ]
+    },
+    {
+      "id": "replace-switchboard-sideband-power-cable",
+      "title": "Replace Switchboard Sideband Power Cable",
+      "category": "hardware",
+      "keywords": [
+        "switchboard sideband", "sideband power cable", "swb", "pdb", "power distribution board",
+        "66001", "fault 66001", "sideband cable", "replace sideband", "msf-111317",
+        "m1324738-001", "switchboard cable", "sideband power", "swb pdb cable"
+      ],
+      "steps": [
+        "Scrub ticket and confirm scope of work. Confirm correct replacement part is on hand: Switchboard Sideband Power Cable 2, MSF-111317/M1324738-001.",
+        "Verify correct asset: scan asset tag and confirm asset tag and serial number match ticket.",
+        "Follow all ATL21 DCO SOP, wear ESD protection, use server lift (heavy equipment), install blanking panels/airflow blockers when node is removed.",
+        "Physically inspect before starting: check for T-pin damage, lid bowing/arching, connector damage, leak sensor issues.",
+        "Power down system, disconnect all external cables, use server lift to remove node from rack, install blanking panels.",
+        "Remove top cover and locate the switchboard sideband power cable between Switchboard (SWB) and Power Distribution Board (PDB).",
+        "Disconnect and remove failed sideband cable from both endpoints.",
+        "Install new replacement cable: ensure correct orientation, fully seat connectors, verify proper routing (follow existing path), no pinching or strain.",
+        "Reinstall top cover, inspect system for loose connections or damage.",
+        "Return node to rack using server lift, reconnect all cables.",
+        "Power on system and confirm: no active alerts, no fault codes, system operating normally.",
+        "Consume spare part in system (MSF number and license plate from ticket).",
+        "Document resolution notes: what failed, what was replaced, validation results. Return work area to original condition."
+      ]
+    },
+    {
+      "id": "server-chassis-replacement-dbds-transfer",
+      "title": "Server Chassis Replacement with DBDS Transfer",
+      "category": "hardware",
+      "keywords": [
+        "chassis replacement", "server chassis", "dbds transfer", "dbd swap", "dc-scm swap",
+        "e1.s nvme swap", "ix dbd", "chassis swap", "replace chassis", "msf-106032",
+        "coolant", "pg25", "blade transfer", "dbd chassis", "chassis rma"
+      ],
+      "steps": [
+        "Scrub the ticket thoroughly and confirm the full scope of work.",
+        "Identify the required replacement server chassis (MSF number from ticket).",
+        "Request parts through Logistics Chat, receive location and confirmation for part availability.",
+        "Retrieve replacement chassis from inventory, verify no DBDS (DC-SCM, E1.S NVMe SSDs, IX/iX DBD) are installed in replacement chassis.",
+        "Verify system pressure on the replacement chassis, check out the replacement inventory item, fill the replacement chassis with coolant per procedure.",
+        "Arrive at target location, verify the affected asset tag matches the ticket.",
+        "Request and receive approval to power off the system.",
+        "Remove all installed optics, disconnect and remove all A-side cables.",
+        "Acquire server lift, remove the blade from the chassis.",
+        "Open the blade to access DBDS components.",
+        "Remove all DBDS from the failed blade: DC-SCM, E1.S NVMe SSDs (all slots), and IX/iX DBD. Document all serial numbers.",
+        "Install all DBDS into the replacement blade in the same locations.",
+        "Remove existing rails from the rack, install replacement rails.",
+        "Reseat the blade into the replacement chassis.",
+        "Reinstall and reseat all optics, reconnect all previously removed cables.",
+        "Power on and restart the blade, verify all indicator LEDs are operational and normal.",
+        "Confirm system functionality post-restart.",
+        "Log all completed work under appropriate WAL number and apply identification plate.",
+        "Request logistics support for the failed unit, drain coolant from the failed chassis following procedure, transport and return the failed unit to Logistics."
+      ]
+    },
+    {
+      "id": "manual-dbd-consume",
+      "title": "Manual DBD Consume Part (Data Bearing Device)",
+      "category": "administrative",
+      "keywords": [
+        "dbd", "data bearing device", "consume dbd", "manual dbd", "dbd consume",
+        "secure bin", "bin management", "dbd disposal", "dbd scan", "dbd add",
+        "secure bin management", "dbd serial", "consume part dbd"
+      ],
+      "steps": [
+        "This process may only be used if the ticket does not include a consume part. If a consume part is listed on the ticket, use the appropriate consume part to properly dispose of the DBD in the designated BIN.",
+        "Go to Data Bearing Devices in the system.",
+        "Go to the Secure BIN Management Tab.",
+        "Choose 'Add DBDs'.",
+        "Fill in all the information, make sure to scan the Serial Number and choose the Type.",
+        "Parent Asset Tag comes from your ticket.",
+        "Source: 'VSO' means Vendor Support Option. If it is AzureRMA select that, if not choose 'Other'.",
+        "Press Submit then leave the information on your ticket notes.",
+        "Double and triple check before you put the DBDs in the BIN. Once you put the DBDs in the BIN you cannot go back and scan the S/N."
+      ]
+    },
+    {
+      "id": "reseat-rack-manager",
+      "title": "Reseat Rack Manager",
+      "category": "network",
+      "keywords": [
+        "rack manager", "reseat rack manager", "rack manager reseat", "console unreachable",
+        "management unreachable", "putty", "valyrian", "serial management", "61101",
+        "fault 61101", "rack manager fault", "m1317306", "console cable", "mgmt cable",
+        "ps1", "ps2", "ps3", "ps4", "power shelf"
+      ],
+      "steps": [
+        "Scrub the ticket, verify asset tag and location, confirm fault code and scope of work.",
+        "Locate the rack manager in the power shelf (PS1/PS2/PS3/PS4) at the specified location.",
+        "Identify Rack Manager part number and serial number, verify against ticket.",
+        "Identify and document management and console cable paths (use labels to find source and destination).",
+        "Disconnect the console cable and test using approved LAN cable tester between source and destination panels. Document result (PASS/FAIL).",
+        "Disconnect the management cable, verify interface state and LED activity.",
+        "Perform line test on management cable using LAN tester. Document result (PASS/FAIL).",
+        "Reconnect console and management cables.",
+        "Connect to rack manager using Valyrian with coupler and console cable. Open Device Manager, identify USB Serial Port (COM number), start PuTTY, select Serial, enter COM number, change speed to 115200, press Enter.",
+        "If PuTTY is not connecting: unseat the rack manager by pressing blue ring down and pulling out.",
+        "Wait 1 to 2 minutes.",
+        "Reseat rack manager.",
+        "Reconnect console and management cables.",
+        "Wait approximately 2 minutes for stabilization.",
+        "Attempt console access via PuTTY, confirm console output and responsiveness.",
+        "Create request for configuration, confirm connectivity and expected behavior are restored.",
+        "Log actions under appropriate WAL number, document rack manager PN/SN, time waited, validation results, and work action log reference.",
+        "Screenshot of functional PuTTY console connection as evidence."
+      ]
+    },
+    {
+      "id": "investigate-network-device-mgmt-console-unreachable",
+      "title": "Investigate Network Device (Mgmt & Console Unreachable)",
+      "category": "network",
+      "keywords": [
+        "network device unreachable", "mgmt unreachable", "console unreachable",
+        "122007", "fault 122007", "network switch unreachable", "nvswitch", "nv0",
+        "switch investigate", "phynet", "phynet debugger", "devicereachability",
+        "inband oob", "switch reseat", "network device investigate"
+      ],
+      "steps": [
+        "Verify the correct switch by matching rack label and device name to ticket. Observe front-panel LEDs.",
+        "If LEDs are green, check Mgmt and Console cable connections: inspect cables for active/flashing link lights. If lights are NOT active, reseat Mgmt and Console cables, check patch panel and octocable connections, re-check for link lights. If still not active, replace the cables. If still not active after replacement, proceed to reseat the switch. If lights ARE active and flashing, proceed to console access step.",
+        "Reseat the switch tray: slide the switch tray fully out of the rack until it disconnects from the Spine/Backplane.",
+        "Wait 1 full minute to allow the backplane and switch to fully de-energize.",
+        "Reseat the switch into the backplane: slide the switch tray back into the rack, ensure it is fully and evenly seated.",
+        "Verify switch LEDs during boot. If LEDs turn green, proceed to console verification. If LEDs stay amber or do not turn on, attempt one additional reseat. If still failing, create an ICM for RMA General Failure and assign to MultinodeNVLink team.",
+        "Connect locally to the Console port, confirm console output and responsiveness.",
+        "Validate via PhyNet Network Device Debugger (https://phynet.trafficmanager.net/UnifiedDeviceAccess/HwProxyDebugger): enter the device name, select and run DeviceReachability, Inband, and OOB_Fast tests, confirm all tests return Green.",
+        "Capture evidence: LED states before and after reseat, cable reseat/replacement actions, console connectivity confirmation, PhyNet test results, and any escalation or RMA reference.",
+        "Escalate and create ICM for RMA if: switch LEDs fail after two reseat attempts, Mgmt/Console remains unreachable after completing all steps, or PhyNet tests do not return healthy results."
+      ]
+    },
+    {
+      "id": "replace-network-device",
+      "title": "Replace Network Device (Break/Fix - Same Model/FE)",
+      "category": "network",
+      "keywords": [
+        "replace network device", "network device replacement", "break fix network",
+        "fru replacement", "network fru", "replace switch", "replace router",
+        "cisco replace", "network device fru", "switch replacement", "router replacement",
+        "dbd verification", "locked rack", "hbi rack"
+      ],
+      "steps": [
+        "Review ticket template, title, description, and instructions. Confirm task is Break/Fix FRU replacement of the same type or functional equivalent, verify the ticket is not a deployment or upgrade task.",
+        "Verify rack is not AKV, check out HBI/locked rack key following the Locked Cabinet Key Checkout Procedure, confirm valid DCAT access for the rack, obtain key from site security per local procedure.",
+        "Arrive at ticketed rack and location, verify rack, RU, and position match the ticket, scan or manually verify the asset tag matches the ticket.",
+        "Verify all cable labels match their intended ports (console, management, heartbeat if applicable, power). Inspect surrounding space for obstructions, remove Velcro or retainers as needed to allow safe removal.",
+        "Power down the network device by removing power cables. Disconnect console cable, management cable, and data/network cables. Ensure cables are fully clear before removal.",
+        "Obtain a server lift, unmount the device from the rack, carefully remove device stopping immediately if any obstruction encountered. Place old device on safe work surface.",
+        "Transfer rack ears/mounting hardware from old device to replacement device, inspect replacement device for visible issues, ensure airflow direction is correct.",
+        "Rack-mount the replacement device using the server lift, secure the device to the rack, verify device is properly seated and level.",
+        "Reinstall all cables: console cable in correct console port, management cable in correct mgmt port, all network interfaces correctly connected, power cables in original configuration. Confirm cables are routed cleanly and secured.",
+        "Power on the replacement device, observe boot sequence, verify device powers on fully, NIM slots show link/activity lights, console and management ports show lights. Verify local console access and confirm device stability.",
+        "Open the old device enclosure, inspect and verify SSD slots are empty, CompactFlash (CF) slots are empty. Remove NIM blanking plates if present, verify no DBD is installed behind blanking plates. Confirm all technicians present agree no DBDs are installed.",
+        "Secure and lock both front and rear rack doors, check in rack keys with security, update DC Central resolution details, confirm the task is marked Completed."
+      ]
+    },
+    {
+      "id": "reboot-power-cycle-network-device",
+      "title": "Reboot / Power Cycle Network Device",
+      "category": "network",
+      "keywords": [
+        "power cycle", "reboot network device", "device power cycle", "network reboot",
+        "power cycle switch", "at will", "network device power", "device reboot",
+        "status lights green", "power on network", "cycle power"
+      ],
+      "steps": [
+        "Scrub the ticket to confirm scope of work. Review task history and verify no recent related or dependent tasks, network traffic is confirmed disabled prior to work, no work window is required, and device is approved for at-will work.",
+        "Proceed to datacenter location and perform a visual confirmation of the rack and node position.",
+        "Verify correct device by confirming asset tag.",
+        "Confirm device power and network status upon arrival: device powered on, network connectivity online. Verify network traffic state matches ticket notes (disabled as expected). Confirm the device is in at-will status.",
+        "Perform a controlled power cycle of the device if required by task.",
+        "Observe device boot sequence and monitor hardware status indicators.",
+        "Verify no error indicators present and device returns to normal operational state.",
+        "Update the ticket with: location and asset verification, network and power state at arrival, power cycle performed, and final device status."
+      ]
+    },
+    {
+      "id": "breakfix-investigation-troubleshooting",
+      "title": "Breakfix: Investigation / General Troubleshooting",
+      "category": "hardware",
+      "keywords": [
+        "breakfix investigation", "breakfix troubleshooting", "general investigation",
+        "device investigation", "triage", "debug", "manual investigation ticket",
+        "investigate device", "breakfix", "general breakfix", "device general investigation"
+      ],
+      "steps": [
+        "Scrub the ticket: identify ticket type, fault code, repair action, and confirm what you are expected to do before touching anything.",
+        "Extract the full link path or affected component from the ticket: confirm source and destination or identify affected hardware.",
+        "Validate location BEFORE moving: confirm datacenter, rack, tile/row, side/slot. Never walk to rack blindly.",
+        "Validate asset accuracy: confirm asset tag and serial. If asset mismatch, STOP and escalate. Do NOT proceed with wrong asset.",
+        "Validate scope vs instructions: confirm repair action matches fault, title matches action, and description matches both.",
+        "Identify risk before execution: check if this is a repeat ticket, if link is already up, if there is active maintenance, and what tools/parts you will need.",
+        "Build a full work plan before touching hardware: know both endpoints, understand the exact repair, have predicted the workflow, and identified risks.",
+        "Perform the work following the specific runbook for the identified issue type.",
+        "Validate the fix before closing: confirm links are up, validate in dashboard/system (Power BI, Fairwater, etc.), ensure issue is resolved fully.",
+        "Document clearly in ticket: what was wrong, what you did, final result, and all asset tags and locations involved."
+      ]
+    }
+  ]
+}

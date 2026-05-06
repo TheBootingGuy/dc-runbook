@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DC Runbook Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:      #0078d4;
+      --blue-dark: #005a9e;
+      --blue-lt:   #deecf9;
+      --green:     #107c10;
+      --red:       #d13438;
+      --gray10:    #f3f2f1;
+      --gray20:    #edebe9;
+      --gray30:    #e1dfdd;
+      --gray50:    #c8c6c4;
+      --gray70:    #8a8886;
+      --gray80:    #605e5c;
+      --gray90:    #323130;
+      --white:     #ffffff;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow:    0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--gray10);
+      color: var(--gray90);
+      font-size: 13px;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--blue);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      height: 46px;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      margin-right: auto;
+    }
+
+    .ms-grid {
+      width: 16px; height: 16px;
+      background: white; border-radius: 2px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; padding: 2px;
+    }
+    .ms-grid span { border-radius: 1px; }
+
+    .nav-ver {
+      font-size: 10px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 1px 7px;
+      border-radius: 8px;
+    }
+
+    .nav-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 3px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.15); }
+    .nav-btn.primary { background: white; color: var(--blue); border-color: white; }
+    .nav-btn.primary:hover { background: var(--blue-lt); }
+
+    /* LAYOUT */
+    .page { max-width: 1080px; margin: 0 auto; padding: 20px; }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      background: var(--white);
+      border: 1px solid var(--gray20);
+      border-radius: 4px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-val { font-size: 26px; font-weight: 600; color: var(--blue); line-height: 1; margin-bottom: 4px; }
+    .stat-lbl { font-size: 10px; color: var(--gray70); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* TOOLBAR */
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .search-box {
+      flex: 1;
+      border: 1px solid var(--gray30);
+      border-radius: 3px;
+      padding: 7px 11px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--gray90);
+      background: var(--white);
+      outline: none;
+    }
+    .search-box:focus { border-color: var(--blue); }
+
+    .cat-filter {
+      border: 1px solid var(--gray30);
+      border-radius: 3px;
+      padding: 7px 11px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--gray90);
+      background: var(--white);
+      outline: none;
+      cursor: pointer;
+      min-width: 150px;
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray20);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.15s;
+    }
+    .card:hover { box-shadow: var(--shadow); }
+
+    .card-top {
+      padding: 11px 13px 9px;
+      border-bottom: 1px solid var(--gray10);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray90);
+      line-height: 1.3;
+      flex: 1;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-hardware     { background: #fff4ce; color: #7a5000; }
+    .badge-network      { background: #dff6dd; color: var(--green); }
+    .badge-availability { background: #fde7e9; color: #a4262c; }
+    .badge-physical     { background: var(--blue-lt); color: var(--blue-dark); }
+    .badge-administrative { background: var(--gray10); color: var(--gray80); }
+
+    .card-mid {
+      padding: 8px 13px;
+      flex: 1;
+    }
+
+    .card-meta {
+      font-size: 11px;
+      color: var(--gray70);
+      margin-bottom: 7px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .step-preview { font-size: 11px; color: var(--gray80); line-height: 1.5; }
+
+    .step-line { display: flex; gap: 5px; padding: 1px 0; }
+    .step-num  { color: var(--gray50); font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+
+    .card-foot {
+      padding: 7px 13px;
+      border-top: 1px solid var(--gray10);
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 3px;
+      padding: 5px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: #106ebe; }
+    .btn-ghost { background: var(--white); color: var(--gray80); border: 1px solid var(--gray30); }
+    .btn-ghost:hover { background: var(--gray10); }
+    .btn-danger { background: var(--white); color: var(--red); border: 1px solid #f1a28e; }
+    .btn-danger:hover { background: #fde7e9; }
+
+    /* EMPTY */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray70);
+    }
+    .empty-icon  { font-size: 36px; margin-bottom: 10px; }
+    .empty-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--gray80); }
+    .empty-sub   { font-size: 12px; }
+
+    /* SYNC BAR */
+    .sync-bar {
+      background: var(--white);
+      border: 1px solid var(--gray20);
+      border-radius: 4px;
+      padding: 13px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+      flex-wrap: wrap;
+    }
+
+    .sync-info { flex: 1; min-width: 200px; }
+    .sync-title { font-size: 13px; font-weight: 600; color: var(--gray90); margin-bottom: 3px; }
+    .sync-sub   { font-size: 11px; color: var(--gray80); line-height: 1.5; }
+
+    code {
+      font-family: Consolas, monospace;
+      background: var(--gray10);
+      border: 1px solid var(--gray20);
+      padding: 1px 5px; border-radius: 2px;
+      font-size: 11px; color: var(--blue);
+    }
+
+    /* MODAL OVERLAY */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .overlay.open { display: flex; }
+
+    .modal {
+      background: var(--white);
+      border-radius: 5px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+
+    .modal-hdr {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--gray20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0;
+      background: var(--white);
+      z-index: 1;
+    }
+    .modal-hdr h2 { font-size: 15px; font-weight: 600; color: var(--gray90); }
+
+    .close-btn {
+      background: none; border: none; cursor: pointer;
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 3px; color: var(--gray80); font-size: 15px;
+    }
+    .close-btn:hover { background: var(--gray10); }
+
+    .modal-body { padding: 18px; }
+    .modal-ftr  {
+      padding: 12px 18px;
+      border-top: 1px solid var(--gray20);
+      display: flex; justify-content: flex-end; gap: 8px;
+      position: sticky; bottom: 0;
+      background: var(--white);
+    }
+
+    /* FORM */
+    .fgrp { margin-bottom: 14px; }
+
+    label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gray70);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 5px;
+    }
+
+    input[type=text], input[type=password], select, textarea {
+      width: 100%;
+      border: 1px solid var(--gray30);
+      border-radius: 3px;
+      padding: 7px 9px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--gray90);
+      background: var(--white);
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--blue); }
+    textarea { resize: vertical; min-height: 72px; }
+
+    .hint { font-size: 11px; color: var(--gray70); margin-top: 4px; }
+
+    /* KEYWORDS */
+    .kw-wrap {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 7px;
+    }
+    .kw-tag {
+      display: flex; align-items: center; gap: 4px;
+      background: var(--blue-lt);
+      border: 1px solid #c7e0f4;
+      border-radius: 8px;
+      padding: 2px 9px 2px 10px;
+      font-size: 11px; color: var(--blue-dark);
+    }
+    .kw-tag button {
+      background: none; border: none; cursor: pointer;
+      color: var(--gray70); font-size: 12px; line-height: 1; padding: 0;
+    }
+    .kw-tag button:hover { color: var(--red); }
+
+    .kw-row { display: flex; gap: 6px; }
+
+    /* STEPS EDITOR */
+    .step-edit-row {
+      display: flex; gap: 6px; align-items: flex-start;
+      padding: 5px 0; border-bottom: 1px solid var(--gray10);
+    }
+    .step-edit-row:last-child { border-bottom: none; }
+
+    .step-n-badge {
+      width: 20px; min-width: 20px; height: 20px;
+      background: var(--gray10); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; color: var(--gray70); margin-top: 3px; flex-shrink: 0;
+    }
+
+    .step-ta {
+      flex: 1;
+      border: 1px solid var(--gray20);
+      border-radius: 3px;
+      padding: 5px 8px;
+      font-family: inherit;
+      font-size: 12px; color: var(--gray90);
+      resize: none; min-height: 30px; overflow: hidden;
+    }
+    .step-ta:focus { border-color: var(--blue); }
+
+    .step-btns { display: flex; flex-direction: column; gap: 2px; }
+    .step-btn {
+      background: none; border: none; cursor: pointer;
+      width: 20px; height: 20px; border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--gray50);
+    }
+    .step-btn:hover { background: var(--gray10); color: var(--gray90); }
+    .step-btn.del:hover { color: var(--red); background: #fde7e9; }
+
+    /* TOAST */
+    #toast {
+      position: fixed; bottom: 20px; right: 20px;
+      background: var(--gray90); color: white;
+      padding: 9px 15px; border-radius: 4px;
+      font-size: 12px; z-index: 999;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    }
+    #toast.show { opacity: 1; }
+
+    /* GITHUB MODAL specific */
+    .info-box {
+      background: var(--blue-lt);
+      border: 1px solid #c7e0f4;
+      border-radius: 3px;
+      padding: 10px 12px;
+      font-size: 12px; color: #004578;
+      line-height: 1.6; margin-bottom: 14px;
+    }
+
+    .gh-status {
+      font-size: 11px; min-height: 18px; margin-top: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="ms-grid">
+      <span style="background:#f35325"></span>
+      <span style="background:#81bc06"></span>
+      <span style="background:#05a6f0"></span>
+      <span style="background:#ffba08"></span>
+    </div>
+    DC Runbook Dashboard
+    <span class="nav-ver">v0.4</span>
+  </div>
+  <button class="nav-btn" id="btn-gh-sync">⚙ GitHub Sync</button>
+  <button class="nav-btn" id="btn-export">Export JSON</button>
+  <button class="nav-btn primary" id="btn-new">+ New SOP</button>
+</nav>
+
+<div class="page">
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val" id="s-total">0</div><div class="stat-lbl">Total SOPs</div></div>
+    <div class="stat"><div class="stat-val" id="s-hw">0</div><div class="stat-lbl">Hardware</div></div>
+    <div class="stat"><div class="stat-val" id="s-net">0</div><div class="stat-lbl">Network</div></div>
+    <div class="stat"><div class="stat-val" id="s-steps">0</div><div class="stat-lbl">Total Steps</div></div>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" class="search-box" id="search" placeholder="Search SOPs by title or keyword..." />
+    <select class="cat-filter" id="cat-filter">
+      <option value="">All categories</option>
+      <option value="hardware">Hardware</option>
+      <option value="network">Network</option>
+      <option value="availability">Availability</option>
+      <option value="physical">Physical</option>
+      <option value="administrative">Administrative</option>
+    </select>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="sync-bar" id="sync-bar">
+    <div class="sync-info">
+      <div class="sync-title" id="sync-title">GitHub sync not configured</div>
+      <div class="sync-sub" id="sync-sub">
+        Click <strong>⚙ GitHub Sync</strong> to connect. Once set, push changes directly to GitHub — every tech's extension updates automatically.
+      </div>
+    </div>
+    <button class="nav-btn" id="btn-export-2" style="display:none">Export JSON</button>
+    <button class="nav-btn primary" id="btn-push" style="display:none">↑ Push to GitHub</button>
+  </div>
+
+</div>
+
+<!-- SOP MODAL -->
+<div class="overlay" id="sop-overlay">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2 id="modal-title">New SOP</h2>
+      <button class="close-btn" id="sop-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="fgrp">
+        <label>Title</label>
+        <input type="text" id="f-title" placeholder="e.g. Replace Failed SFP Optic" />
+      </div>
+      <div class="fgrp">
+        <label>Category</label>
+        <select id="f-cat">
+          <option value="hardware">Hardware</option>
+          <option value="network">Network</option>
+          <option value="availability">Availability</option>
+          <option value="physical">Physical</option>
+          <option value="administrative">Administrative</option>
+        </select>
+      </div>
+      <div class="fgrp">
+        <label>Keywords</label>
+        <div class="kw-wrap" id="kw-wrap"></div>
+        <div class="kw-row">
+          <input type="text" id="kw-input" placeholder="Type keyword and press Enter..." />
+          <button class="btn btn-ghost" id="kw-add" style="white-space:nowrap">Add</button>
+        </div>
+        <div class="hint">Include fault codes, component names, error messages — more keywords = better auto-detection</div>
+      </div>
+      <div class="fgrp">
+        <label>Steps</label>
+        <div id="steps-editor"></div>
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <input type="text" id="step-input" placeholder="Type a step and press Enter..." />
+          <button class="btn btn-ghost" id="step-add" style="white-space:nowrap">Add Step</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-ghost" id="sop-cancel">Cancel</button>
+      <button class="btn btn-primary" id="sop-save">Save SOP</button>
+    </div>
+  </div>
+</div>
+
+<!-- GITHUB SYNC MODAL -->
+<div class="overlay" id="gh-overlay">
+  <div class="modal" style="max-width:440px;">
+    <div class="modal-hdr">
+      <h2>GitHub Sync</h2>
+      <button class="close-btn" id="gh-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-box">
+        A Personal Access Token lets this page commit changes directly to your GitHub repo.
+        Your token is stored only in your browser's localStorage — never sent anywhere except the GitHub API.
+      </div>
+      <div class="fgrp">
+        <label>How to get a token</label>
+        <ol style="padding-left:16px;font-size:12px;color:#323130;line-height:1.9;">
+          <li>Go to <a href="https://github.com/settings/tokens/new" target="_blank" style="color:#0078d4;">github.com/settings/tokens/new</a></li>
+          <li>Name it anything &nbsp;|&nbsp; Expiration: <strong>No expiration</strong></li>
+          <li>Check <strong>repo</strong> scope only</li>
+          <li>Click <strong>Generate token</strong> — copy it immediately</li>
+        </ol>
+      </div>
+      <div class="fgrp">
+        <label>Personal Access Token</label>
+        <input type="password" id="gh-token" placeholder="ghp_..." />
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="fgrp">
+          <label>GitHub Username</label>
+          <input type="text" id="gh-user" placeholder="thebootingguy" />
+        </div>
+        <div class="fgrp">
+          <label>Repository</label>
+          <input type="text" id="gh-repo" placeholder="dc-runbook" />
+        </div>
+      </div>
+      <div class="fgrp">
+        <label>File path in repo</label>
+        <input type="text" id="gh-path" placeholder="runbook.json" />
+        <div class="hint">Leave as runbook.json unless you moved it</div>
+      </div>
+      <div class="gh-status" id="gh-status"></div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-ghost" id="gh-cancel">Cancel</button>
+      <button class="btn btn-ghost" id="gh-test">Test Connection</button>
+      <button class="btn btn-primary" id="gh-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────────
+let runbook    = { version: '0.4', lastUpdated: '', entries: [] };
+let editIdx    = null;
+let editKws    = [];
+let editSteps  = [];
+
+// ── LOAD ──────────────────────────────────────────────────────
+async function loadRunbook() {
+  // try both relative and absolute URL with cache busting
+  const urls = [
+    './runbook.json?v=' + Date.now(),
+    'https://thebootingguy.github.io/dc-runbook/runbook.json?v=' + Date.now()
+  ];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (data && data.entries && data.entries.length > 0) {
+        runbook = data;
+        return;
+      }
+    } catch(e) { /* try next */ }
+  }
+  console.warn('Could not load runbook.json from either URL');
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function render() {
+  const q   = document.getElementById('search').value.toLowerCase();
+  const cat = document.getElementById('cat-filter').value;
+
+  // stats
+  document.getElementById('s-total').textContent  = runbook.entries.length;
+  document.getElementById('s-hw').textContent     = runbook.entries.filter(e => e.category === 'hardware').length;
+  document.getElementById('s-net').textContent    = runbook.entries.filter(e => e.category === 'network').length;
+  document.getElementById('s-steps').textContent  = runbook.entries.reduce((a, e) => a + e.steps.length, 0);
+
+  const filtered = runbook.entries.filter(e => {
+    const matchCat  = !cat || e.category === cat;
+    const matchText = !q || e.title.toLowerCase().includes(q) || (e.keywords || []).some(k => k.toLowerCase().includes(q));
+    return matchCat && matchText;
+  });
+
+  const grid = document.getElementById('grid');
+
+  if (!filtered.length) {
+    grid.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">📋</div>
+        <div class="empty-title">${runbook.entries.length === 0 ? 'No SOPs loaded' : 'No results'}</div>
+        <div class="empty-sub">${runbook.entries.length === 0 ? 'Check that runbook.json is uploaded to your GitHub repo' : 'Try a different search term'}</div>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(entry => {
+    const ri  = runbook.entries.indexOf(entry);
+    const bc  = 'badge-' + (entry.category || 'hardware');
+    const pre = entry.steps.slice(0, 3);
+    return `
+      <div class="card">
+        <div class="card-top">
+          <div class="card-title">${x(entry.title)}</div>
+          <span class="badge ${bc}">${entry.category || 'hardware'}</span>
+        </div>
+        <div class="card-mid">
+          <div class="card-meta">
+            <span>${entry.steps.length} steps</span>
+            <span>${(entry.keywords || []).length} keywords</span>
+          </div>
+          <div class="step-preview">
+            ${pre.map((s, i) => `<div class="step-line"><span class="step-num">${i+1}.</span><span>${x(s.slice(0, 72))}${s.length > 72 ? '…' : ''}</span></div>`).join('')}
+            ${entry.steps.length > 3 ? `<div style="font-size:10px;color:var(--gray50);margin-top:3px;">+${entry.steps.length - 3} more</div>` : ''}
+          </div>
+        </div>
+        <div class="card-foot">
+          <button class="btn btn-danger" onclick="deleteSOP(${ri})">Delete</button>
+          <button class="btn btn-ghost"  onclick="openSOP(${ri})">Edit</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── SOP MODAL ─────────────────────────────────────────────────
+function openSOP(idx) {
+  editIdx   = (idx === undefined || idx === null) ? null : idx;
+  editKws   = [];
+  editSteps = [];
+
+  if (editIdx !== null) {
+    const e = runbook.entries[editIdx];
+    document.getElementById('f-title').value = e.title;
+    document.getElementById('f-cat').value   = e.category || 'hardware';
+    editKws   = [...(e.keywords || [])];
+    editSteps = [...e.steps];
+    document.getElementById('modal-title').textContent = 'Edit SOP';
+  } else {
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-cat').value   = 'hardware';
+    document.getElementById('modal-title').textContent = 'New SOP';
+  }
+
+  renderKws();
+  renderSteps();
+  document.getElementById('sop-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('f-title').focus(), 50);
+}
+
+function closeSOP() {
+  document.getElementById('sop-overlay').classList.remove('open');
+}
+
+function renderKws() {
+  document.getElementById('kw-wrap').innerHTML = editKws.map((k, i) => `
+    <span class="kw-tag">${x(k)}<button onclick="rmKw(${i})">×</button></span>`).join('');
+}
+
+function rmKw(i) { editKws.splice(i, 1); renderKws(); }
+
+function addKw() {
+  const el  = document.getElementById('kw-input');
+  const val = el.value.trim().toLowerCase();
+  if (val && !editKws.includes(val)) { editKws.push(val); renderKws(); }
+  el.value = '';
+  el.focus();
+}
+
+function renderSteps() {
+  const el = document.getElementById('steps-editor');
+  if (!editSteps.length) {
+    el.innerHTML = '<div style="font-size:12px;color:var(--gray70);padding:6px 0;">No steps yet.</div>';
+    return;
+  }
+  el.innerHTML = editSteps.map((s, i) => `
+    <div class="step-edit-row">
+      <div class="step-n-badge">${i + 1}</div>
+      <textarea class="step-ta" rows="1"
+        oninput="editSteps[${i}]=this.value;autoH(this)"
+        onkeydown="stepKey(event,${i})"
+      >${x(s)}</textarea>
+      <div class="step-btns">
+        <button class="step-btn" onclick="mvStep(${i},-1)" ${i===0?'style="opacity:0.3"':''}>↑</button>
+        <button class="step-btn" onclick="mvStep(${i},1)"  ${i===editSteps.length-1?'style="opacity:0.3"':''}>↓</button>
+        <button class="step-btn del" onclick="rmStep(${i})">✕</button>
+      </div>
+    </div>`).join('');
+  el.querySelectorAll('.step-ta').forEach(autoH);
+}
+
+function autoH(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+
+function stepKey(e, i) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    editSteps[i] = e.target.value;
+    editSteps.splice(i + 1, 0, '');
+    renderSteps();
+    setTimeout(() => {
+      const rows = document.querySelectorAll('.step-ta');
+      if (rows[i + 1]) rows[i + 1].focus();
+    }, 0);
+  }
+}
+
+function mvStep(i, d) {
+  const j = i + d;
+  if (j < 0 || j >= editSteps.length) return;
+  [editSteps[i], editSteps[j]] = [editSteps[j], editSteps[i]];
+  renderSteps();
+}
+
+function rmStep(i)  { editSteps.splice(i, 1); renderSteps(); }
+
+function addStep() {
+  const el = document.getElementById('step-input');
+  const v  = el.value.trim();
+  if (v) { editSteps.push(v); renderSteps(); }
+  el.value = '';
+  el.focus();
+}
+
+function saveSOP() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { document.getElementById('f-title').focus(); return; }
+
+  // sync textarea values
+  document.querySelectorAll('.step-ta').forEach((el, i) => { editSteps[i] = el.value.trim(); });
+  const steps = editSteps.filter(Boolean);
+
+  const entry = {
+    id:       title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+    title,
+    category: document.getElementById('f-cat').value,
+    keywords: editKws,
+    steps
+  };
+
+  if (editIdx !== null) {
+    runbook.entries[editIdx] = entry;
+    toast('SOP updated');
+  } else {
+    runbook.entries.push(entry);
+    toast('SOP added');
+  }
+
+  runbook.lastUpdated = new Date().toISOString().split('T')[0];
+  closeSOP();
+  render();
+}
+
+function deleteSOP(i) {
+  if (!confirm(`Delete "${runbook.entries[i].title}"?`)) return;
+  runbook.entries.splice(i, 1);
+  runbook.lastUpdated = new Date().toISOString().split('T')[0];
+  toast('SOP deleted');
+  render();
+}
+
+// ── EXPORT ────────────────────────────────────────────────────
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(runbook, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'runbook.json'; a.click();
+  URL.revokeObjectURL(url);
+  toast('runbook.json downloaded');
+}
+
+// ── GITHUB SYNC ───────────────────────────────────────────────
+function loadGHConfig() {
+  const cfg = JSON.parse(localStorage.getItem('gh_cfg') || '{}');
+  document.getElementById('gh-token').value = cfg.token || '';
+  document.getElementById('gh-user').value  = cfg.user  || 'thebootingguy';
+  document.getElementById('gh-repo').value  = cfg.repo  || 'dc-runbook';
+  document.getElementById('gh-path').value  = cfg.path  || 'runbook.json';
+  updateSyncBar(!!cfg.token);
+}
+
+function updateSyncBar(configured) {
+  const title = document.getElementById('sync-title');
+  const sub   = document.getElementById('sync-sub');
+  const push  = document.getElementById('btn-push');
+  if (configured) {
+    title.textContent = '✓ GitHub sync configured';
+    title.style.color = 'var(--green)';
+    sub.textContent   = 'Click ↑ Push to GitHub after making changes. Every tech gets the update within minutes.';
+    push.style.display = '';
+  } else {
+    title.textContent = 'GitHub sync not configured';
+    title.style.color = '';
+    sub.innerHTML     = 'Click <strong>⚙ GitHub Sync</strong> above to connect your repo.';
+    push.style.display = 'none';
+  }
+}
+
+function openGH() {
+  loadGHConfig();
+  document.getElementById('gh-status').textContent = '';
+  document.getElementById('gh-overlay').classList.add('open');
+}
+
+function closeGH() {
+  document.getElementById('gh-overlay').classList.remove('open');
+}
+
+function ghStatus(msg, color) {
+  const el = document.getElementById('gh-status');
+  el.textContent = msg;
+  el.style.color = color;
+}
+
+async function testGH() {
+  const token = document.getElementById('gh-token').value.trim();
+  const user  = document.getElementById('gh-user').value.trim() || 'thebootingguy';
+  const repo  = document.getElementById('gh-repo').value.trim() || 'dc-runbook';
+  if (!token) { ghStatus('Enter a token first.', 'var(--red)'); return; }
+  ghStatus('Testing...', 'var(--gray70)');
+  try {
+    const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
+      headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (res.ok) {
+      const d = await res.json();
+      ghStatus(`✓ Connected — ${d.full_name}`, 'var(--green)');
+    } else {
+      ghStatus(`✕ Error ${res.status} — check your token and repo name`, 'var(--red)');
+    }
+  } catch(e) {
+    ghStatus('✕ Could not reach GitHub', 'var(--red)');
+  }
+}
+
+function saveGH() {
+  const token = document.getElementById('gh-token').value.trim();
+  if (!token) { ghStatus('Please enter your token.', 'var(--red)'); return; }
+  localStorage.setItem('gh_cfg', JSON.stringify({
+    token,
+    user: document.getElementById('gh-user').value.trim() || 'thebootingguy',
+    repo: document.getElementById('gh-repo').value.trim() || 'dc-runbook',
+    path: document.getElementById('gh-path').value.trim() || 'runbook.json',
+  }));
+  closeGH();
+  updateSyncBar(true);
+  toast('GitHub sync saved');
+}
+
+async function pushToGitHub() {
+  const cfg = JSON.parse(localStorage.getItem('gh_cfg') || '{}');
+  if (!cfg.token) { toast('Set up GitHub Sync first'); return; }
+
+  const btn = document.getElementById('btn-push');
+  btn.textContent = 'Pushing...';
+  btn.disabled    = true;
+
+  try {
+    // get current file SHA
+    const getRes = await fetch(
+      `https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/${cfg.path}`,
+      { headers: { 'Authorization': `Bearer ${cfg.token}`, 'Accept': 'application/vnd.github+json' } }
+    );
+    let sha = null;
+    if (getRes.ok) sha = (await getRes.json()).sha;
+
+    // encode and push
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(runbook, null, 2))));
+    const putRes  = await fetch(
+      `https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/${cfg.path}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${cfg.token}`,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `Update runbook — ${new Date().toLocaleString()}`,
+          content: encoded,
+          ...(sha ? { sha } : {})
+        })
+      }
+    );
+
+    if (putRes.ok) {
+      toast('✓ Pushed to GitHub — extension updates automatically');
+      document.getElementById('sync-title').textContent = '✓ Last pushed: ' + new Date().toLocaleTimeString();
+    } else {
+      const err = await putRes.json().catch(() => ({}));
+      toast('✕ Push failed: ' + (err.message || putRes.status));
+    }
+  } catch(e) {
+    toast('✕ ' + e.message);
+  } finally {
+    btn.textContent = '↑ Push to GitHub';
+    btn.disabled = false;
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────────
+function x(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ── EVENTS ────────────────────────────────────────────────────
+document.getElementById('btn-new').addEventListener('click', () => openSOP(null));
+document.getElementById('btn-export').addEventListener('click', exportJSON);
+document.getElementById('btn-export-2').addEventListener('click', exportJSON);
+document.getElementById('btn-gh-sync').addEventListener('click', openGH);
+document.getElementById('btn-push').addEventListener('click', pushToGitHub);
+
+document.getElementById('sop-close').addEventListener('click', closeSOP);
+document.getElementById('sop-cancel').addEventListener('click', closeSOP);
+document.getElementById('sop-save').addEventListener('click', saveSOP);
+document.getElementById('sop-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeSOP(); });
+
+document.getElementById('kw-add').addEventListener('click', addKw);
+document.getElementById('kw-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addKw(); } });
+document.getElementById('step-add').addEventListener('click', addStep);
+document.getElementById('step-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addStep(); } });
+
+document.getElementById('gh-close').addEventListener('click', closeGH);
+document.getElementById('gh-cancel').addEventListener('click', closeGH);
+document.getElementById('gh-save').addEventListener('click', saveGH);
+document.getElementById('gh-test').addEventListener('click', testGH);
+document.getElementById('gh-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeGH(); });
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('cat-filter').addEventListener('change', render);
+
+// ── INIT ──────────────────────────────────────────────────────
+loadGHConfig();
+loadRunbook().then(render);
+</script>
+</body>
+</html>
