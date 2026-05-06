@@ -1,17 +1,30 @@
 {
   "version": "0.4",
-  "lastUpdated": "2026-05-05",
+  "lastUpdated": "2026-05-06",
   "entries": [
     {
-      "id": "replace-single-mode-fiber-bt-bt",
+      "id": "replace-single-mode-fiber-cable-bt-to-bt",
       "title": "Replace Single Mode Fiber Cable (BT to BT)",
       "category": "network",
       "keywords": [
-        "replace single mode fiber", "smf", "single mode fiber cable", "bt to bt",
-        "bt0", "bt1", "mpo", "mmc", "fiber replace", "121012", "livelinkmitigation",
-        "link down", "fiber cable bt", "replace fiber", "bt patch panel"
+        "replace single mode fiber",
+        "smf",
+        "single mode fiber cable",
+        "bt to bt",
+        "bt0",
+        "bt1",
+        "mpo",
+        "mmc",
+        "fiber replace",
+        "121012",
+        "livelinkmitigation",
+        "link down",
+        "fiber cable bt",
+        "replace fiber",
+        "bt patch panel"
       ],
       "steps": [
+        "wash your hands",
         "Scrub the ticket to understand scope, endpoints, and fault details.",
         "Confirm maintenance window and impact approval if required.",
         "Identify start device and end device from the ticket.",
@@ -43,9 +56,20 @@
       "title": "Clean and Scope Single Mode Fiber Cable",
       "category": "network",
       "keywords": [
-        "clean and scope", "clean single mode fiber", "smf", "optic clean", "fiber clean",
-        "scope fiber", "clean scope", "link down", "link degraded", "optic contamination",
-        "fiber inspection", "reseat optic", "121011", "clean fiber cable"
+        "clean and scope",
+        "clean single mode fiber",
+        "smf",
+        "optic clean",
+        "fiber clean",
+        "scope fiber",
+        "clean scope",
+        "link down",
+        "link degraded",
+        "optic contamination",
+        "fiber inspection",
+        "reseat optic",
+        "121011",
+        "clean fiber cable"
       ],
       "steps": [
         "Scrub the ticket to confirm scope of work, reported issue (link down or degraded link), and correct asset and location. Review prior ticket notes and alerts if present.",
@@ -68,9 +92,20 @@
       "title": "Device: Investigate Link / Link Down Mitigation",
       "category": "network",
       "keywords": [
-        "investigate link", "link down mitigation", "linkdownmitigation", "link down",
-        "link degraded", "bt-bt", "bt-server", "121013", "sev 3", "fiber investigate",
-        "device investigate link", "link investigation", "link not up", "link failure"
+        "investigate link",
+        "link down mitigation",
+        "linkdownmitigation",
+        "link down",
+        "link degraded",
+        "bt-bt",
+        "bt-server",
+        "121013",
+        "sev 3",
+        "fiber investigate",
+        "device investigate link",
+        "link investigation",
+        "link not up",
+        "link failure"
       ],
       "steps": [
         "Scrub the ticket and confirm the full scope of work: confirm ticket type, fault code, severity, and that instruction is to follow runbook guidance.",
@@ -91,9 +126,20 @@
       "title": "Investigate MPO Trunk Cable (Miswire / Link Loss)",
       "category": "network",
       "keywords": [
-        "mpo trunk", "miswire", "mpo miswire", "patch port swap", "serverpatchportswap",
-        "mpo trunk cable", "links down", "multiple links down", "kraken", "miswired",
-        "link loss", "mpo investigate", "trunk cable", "patch swap"
+        "mpo trunk",
+        "miswire",
+        "mpo miswire",
+        "patch port swap",
+        "serverpatchportswap",
+        "mpo trunk cable",
+        "links down",
+        "multiple links down",
+        "kraken",
+        "miswired",
+        "link loss",
+        "mpo investigate",
+        "trunk cable",
+        "patch swap"
       ],
       "steps": [
         "Navigate to the rack and verify asset tag, confirm device and U-position.",
@@ -115,9 +161,20 @@
       "title": "Reseat SFP Optic",
       "category": "network",
       "keywords": [
-        "reseat sfp", "sfp optic", "sfp reseat", "nic inactive", "nica2", "no link light",
-        "optic reseat", "sfp", "qsfp reseat", "port no light", "reseat optic",
-        "link light out", "optic investigation", "nic no link"
+        "reseat sfp",
+        "sfp optic",
+        "sfp reseat",
+        "nic inactive",
+        "nica2",
+        "no link light",
+        "optic reseat",
+        "sfp",
+        "qsfp reseat",
+        "port no light",
+        "reseat optic",
+        "link light out",
+        "optic investigation",
+        "nic no link"
       ],
       "steps": [
         "Start task, verify the server asset tag against the ticket and physical device.",
@@ -138,9 +195,20 @@
       "title": "Reseat Multi Mode Fiber Cable",
       "category": "network",
       "keywords": [
-        "reseat multi mode fiber", "mmf", "multi mode fiber", "mmo cable", "mpo reseat",
-        "fiber reseat", "121012", "livelinkmitigation", "reseat mmf", "link down mmf",
-        "multimode", "multi-mode fiber reseat", "fiber hop", "all hops reseat"
+        "reseat multi mode fiber",
+        "mmf",
+        "multi mode fiber",
+        "mmo cable",
+        "mpo reseat",
+        "fiber reseat",
+        "121012",
+        "livelinkmitigation",
+        "reseat mmf",
+        "link down mmf",
+        "multimode",
+        "multi-mode fiber reseat",
+        "fiber hop",
+        "all hops reseat"
       ],
       "steps": [
         "Verify asset tag matches ticket, confirm ports match ticket, and confirm correct racks.",
@@ -161,9 +229,19 @@
       "title": "Reseat Unknown Network Cable",
       "category": "network",
       "keywords": [
-        "reseat cable", "reseat network cable", "121012", "fault 121012", "cable reseat",
-        "unknown network cable", "reseat only", "etp reseat", "link reseat", "port reseat",
-        "reseat fiber", "lc fiber reseat", "reseat connection"
+        "reseat cable",
+        "reseat network cable",
+        "121012",
+        "fault 121012",
+        "cable reseat",
+        "unknown network cable",
+        "reseat only",
+        "etp reseat",
+        "link reseat",
+        "port reseat",
+        "reseat fiber",
+        "lc fiber reseat",
+        "reseat connection"
       ],
       "steps": [
         "Confirm you are working the correct task: verify task ID, fault code (121012 Reseat Cable), and status.",
@@ -186,9 +264,19 @@
       "title": "Replace Failed Optic and Restore Link",
       "category": "network",
       "keywords": [
-        "replace optic", "failed optic", "optic replacement", "link down optic",
-        "replace sfp", "replace qsfp", "optic failed", "bad optic", "optic fault",
-        "replace transceiver", "install optic", "new optic", "optic rma"
+        "replace optic",
+        "failed optic",
+        "optic replacement",
+        "link down optic",
+        "replace sfp",
+        "replace qsfp",
+        "optic failed",
+        "bad optic",
+        "optic fault",
+        "replace transceiver",
+        "install optic",
+        "new optic",
+        "optic rma"
       ],
       "steps": [
         "Scrub the ticket to confirm scope of work (optic replacement), reported issue (link down or degraded link), and correct asset and location. Review prior ticket notes and alerts. Confirm replacement optic availability.",
@@ -210,9 +298,14 @@
       "title": "Clean and Scope Patch Panel Cable",
       "category": "network",
       "keywords": [
-        "clean and scope patch panel", "patch panel cable", "clean patch panel",
-        "patch panel fiber", "scope patch panel", "clean patch cable",
-        "patch panel clean", "patch panel investigate"
+        "clean and scope patch panel",
+        "patch panel cable",
+        "clean patch panel",
+        "patch panel fiber",
+        "scope patch panel",
+        "clean patch cable",
+        "patch panel clean",
+        "patch panel investigate"
       ],
       "steps": [
         "Scrub the ticket to confirm scope of work and correct asset and location.",
@@ -232,9 +325,21 @@
       "title": "Investigate E1.S Ruler SSD (NVMe Slow PCIe Link)",
       "category": "hardware",
       "keywords": [
-        "e1.s", "ruler ssd", "nvme slow", "pcie link", "62026", "fault 62026",
-        "nvme slow pcie", "e1s ssd", "csidiag", "ssd investigate", "nvme investigate",
-        "e1.s slot", "samsung ssd", "gb200 ssd", "nvme pcie fault"
+        "e1.s",
+        "ruler ssd",
+        "nvme slow",
+        "pcie link",
+        "62026",
+        "fault 62026",
+        "nvme slow pcie",
+        "e1s ssd",
+        "csidiag",
+        "ssd investigate",
+        "nvme investigate",
+        "e1.s slot",
+        "samsung ssd",
+        "gb200 ssd",
+        "nvme pcie fault"
       ],
       "steps": [
         "Review CSIDiagnostic output indicating NVMe Slow PCIe Link fault, identify affected component (E1.S slot number and ruler SSD), confirm task is approved under applicable DCIS Waiver.",
@@ -256,9 +361,20 @@
       "title": "Investigate OSFP Board",
       "category": "hardware",
       "keywords": [
-        "osfp board", "121004", "investigate osfp", "nic a2", "nic links down",
-        "osfp investigate", "8 links down", "slot a2", "osfp module", "sideband cable",
-        "cage swap", "fairwater adx", "32 links", "nic investigation"
+        "osfp board",
+        "121004",
+        "investigate osfp",
+        "nic a2",
+        "nic links down",
+        "osfp investigate",
+        "8 links down",
+        "slot a2",
+        "osfp module",
+        "sideband cable",
+        "cage swap",
+        "fairwater adx",
+        "32 links",
+        "nic investigation"
       ],
       "steps": [
         "Verify ticket details: task ID, fault code 121004 (Investigate OSFP Board), scope is NIC A2 only.",
@@ -278,9 +394,20 @@
       "title": "Reseat DC-SCM (Datacenter Secure Control Module)",
       "category": "hardware",
       "keywords": [
-        "dc-scm", "dc scm", "datacenter secure control module", "138000", "fault 138000",
-        "bmc", "oob access", "reseat dc-scm", "scm reseat", "server management module",
-        "dcscm", "bmc not responding", "oob not responding", "management module"
+        "dc-scm",
+        "dc scm",
+        "datacenter secure control module",
+        "138000",
+        "fault 138000",
+        "bmc",
+        "oob access",
+        "reseat dc-scm",
+        "scm reseat",
+        "server management module",
+        "dcscm",
+        "bmc not responding",
+        "oob not responding",
+        "management module"
       ],
       "steps": [
         "Verify asset is present in rack, ensure node and asset tag match ticket details.",
@@ -305,9 +432,19 @@
       "title": "Replace DC-SCM (Datacenter Secure Control Module)",
       "category": "hardware",
       "keywords": [
-        "replace dc-scm", "dc-scm replacement", "66007", "fault 66007", "dc scm replace",
-        "replace scm", "new dc-scm", "dbd dc-scm", "scm failure", "bmc replacement",
-        "dc-scm rma", "management module replace", "msf-118908"
+        "replace dc-scm",
+        "dc-scm replacement",
+        "66007",
+        "fault 66007",
+        "dc scm replace",
+        "replace scm",
+        "new dc-scm",
+        "dbd dc-scm",
+        "scm failure",
+        "bmc replacement",
+        "dc-scm rma",
+        "management module replace",
+        "msf-118908"
       ],
       "steps": [
         "Arrive at rack location, scan and verify asset tag and serial.",
@@ -330,9 +467,20 @@
       "title": "Investigate MB Onboard M.2 NVMe SSD",
       "category": "hardware",
       "keywords": [
-        "m.2 nvme", "m2 ssd", "mb onboard", "nvme slow", "62026", "fault 62026",
-        "m.2 investigate", "onboard ssd", "nvme m2", "motherboard ssd", "m2 slot",
-        "nvme pcie link", "csidiag nvme", "mzvl6960"
+        "m.2 nvme",
+        "m2 ssd",
+        "mb onboard",
+        "nvme slow",
+        "62026",
+        "fault 62026",
+        "m.2 investigate",
+        "onboard ssd",
+        "nvme m2",
+        "motherboard ssd",
+        "m2 slot",
+        "nvme pcie link",
+        "csidiag nvme",
+        "mzvl6960"
       ],
       "steps": [
         "Review CSIDiagnostic indicating NVMe Slow PCIe Link fault, identify affected component as MB onboard M.2 NVMe SSD, confirm task is authorized under applicable DCIS Waiver. Verify repair action type: Investigate (no replacement authorized at this stage).",
@@ -355,9 +503,21 @@
       "title": "Reseat Server Blade (GB200F)",
       "category": "hardware",
       "keywords": [
-        "reseat server blade", "server blade", "gb200", "gb200f", "66001", "fault 66001",
-        "blade reseat", "c4a14", "c4a15", "reseat blade", "server reseat",
-        "msf-111838", "ingrasys", "blade server", "server node reseat"
+        "reseat server blade",
+        "server blade",
+        "gb200",
+        "gb200f",
+        "66001",
+        "fault 66001",
+        "blade reseat",
+        "c4a14",
+        "c4a15",
+        "reseat blade",
+        "server reseat",
+        "msf-111838",
+        "ingrasys",
+        "blade server",
+        "server node reseat"
       ],
       "steps": [
         "Confirm task ID is not a repeat ticket within policy thresholds, verify repair action is Reseat (Server Blade), ensure asset is present in rack.",
@@ -379,9 +539,17 @@
       "title": "FPGA Replacement",
       "category": "hardware",
       "keywords": [
-        "fpga", "fpga replacement", "fpga replace", "field programmable gate array",
-        "fpga failed", "fpga fault", "msf-103041", "fpga rma", "replace fpga",
-        "fpga card", "fpga board"
+        "fpga",
+        "fpga replacement",
+        "fpga replace",
+        "field programmable gate array",
+        "fpga failed",
+        "fpga fault",
+        "msf-103041",
+        "fpga rma",
+        "replace fpga",
+        "fpga card",
+        "fpga board"
       ],
       "steps": [
         "Scrub the ticket to confirm scope of work.",
@@ -409,9 +577,19 @@
       "title": "Replace FPGA Riser Cable",
       "category": "hardware",
       "keywords": [
-        "fpga riser cable", "riser cable", "67203", "fault 67203", "ovl pcie",
-        "pcie link degradation", "roce low throughput", "replace riser", "riser replace",
-        "msf-118243", "glacier peak riser", "bianca module", "switch board riser"
+        "fpga riser cable",
+        "riser cable",
+        "67203",
+        "fault 67203",
+        "ovl pcie",
+        "pcie link degradation",
+        "roce low throughput",
+        "replace riser",
+        "riser replace",
+        "msf-118243",
+        "glacier peak riser",
+        "bianca module",
+        "switch board riser"
       ],
       "steps": [
         "Scrub the ticket to confirm fault code, scope of work (FPGA riser cable replacement), and affected node and asset tag.",
@@ -435,9 +613,20 @@
       "title": "Replace Switchboard Sideband Power Cable",
       "category": "hardware",
       "keywords": [
-        "switchboard sideband", "sideband power cable", "swb", "pdb", "power distribution board",
-        "66001", "fault 66001", "sideband cable", "replace sideband", "msf-111317",
-        "m1324738-001", "switchboard cable", "sideband power", "swb pdb cable"
+        "switchboard sideband",
+        "sideband power cable",
+        "swb",
+        "pdb",
+        "power distribution board",
+        "66001",
+        "fault 66001",
+        "sideband cable",
+        "replace sideband",
+        "msf-111317",
+        "m1324738-001",
+        "switchboard cable",
+        "sideband power",
+        "swb pdb cable"
       ],
       "steps": [
         "Scrub ticket and confirm scope of work. Confirm correct replacement part is on hand: Switchboard Sideband Power Cable 2, MSF-111317/M1324738-001.",
@@ -460,9 +649,21 @@
       "title": "Server Chassis Replacement with DBDS Transfer",
       "category": "hardware",
       "keywords": [
-        "chassis replacement", "server chassis", "dbds transfer", "dbd swap", "dc-scm swap",
-        "e1.s nvme swap", "ix dbd", "chassis swap", "replace chassis", "msf-106032",
-        "coolant", "pg25", "blade transfer", "dbd chassis", "chassis rma"
+        "chassis replacement",
+        "server chassis",
+        "dbds transfer",
+        "dbd swap",
+        "dc-scm swap",
+        "e1.s nvme swap",
+        "ix dbd",
+        "chassis swap",
+        "replace chassis",
+        "msf-106032",
+        "coolant",
+        "pg25",
+        "blade transfer",
+        "dbd chassis",
+        "chassis rma"
       ],
       "steps": [
         "Scrub the ticket thoroughly and confirm the full scope of work.",
@@ -491,9 +692,19 @@
       "title": "Manual DBD Consume Part (Data Bearing Device)",
       "category": "administrative",
       "keywords": [
-        "dbd", "data bearing device", "consume dbd", "manual dbd", "dbd consume",
-        "secure bin", "bin management", "dbd disposal", "dbd scan", "dbd add",
-        "secure bin management", "dbd serial", "consume part dbd"
+        "dbd",
+        "data bearing device",
+        "consume dbd",
+        "manual dbd",
+        "dbd consume",
+        "secure bin",
+        "bin management",
+        "dbd disposal",
+        "dbd scan",
+        "dbd add",
+        "secure bin management",
+        "dbd serial",
+        "consume part dbd"
       ],
       "steps": [
         "This process may only be used if the ticket does not include a consume part. If a consume part is listed on the ticket, use the appropriate consume part to properly dispose of the DBD in the designated BIN.",
@@ -512,10 +723,25 @@
       "title": "Reseat Rack Manager",
       "category": "network",
       "keywords": [
-        "rack manager", "reseat rack manager", "rack manager reseat", "console unreachable",
-        "management unreachable", "putty", "valyrian", "serial management", "61101",
-        "fault 61101", "rack manager fault", "m1317306", "console cable", "mgmt cable",
-        "ps1", "ps2", "ps3", "ps4", "power shelf"
+        "rack manager",
+        "reseat rack manager",
+        "rack manager reseat",
+        "console unreachable",
+        "management unreachable",
+        "putty",
+        "valyrian",
+        "serial management",
+        "61101",
+        "fault 61101",
+        "rack manager fault",
+        "m1317306",
+        "console cable",
+        "mgmt cable",
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "power shelf"
       ],
       "steps": [
         "Scrub the ticket, verify asset tag and location, confirm fault code and scope of work.",
@@ -543,10 +769,21 @@
       "title": "Investigate Network Device (Mgmt & Console Unreachable)",
       "category": "network",
       "keywords": [
-        "network device unreachable", "mgmt unreachable", "console unreachable",
-        "122007", "fault 122007", "network switch unreachable", "nvswitch", "nv0",
-        "switch investigate", "phynet", "phynet debugger", "devicereachability",
-        "inband oob", "switch reseat", "network device investigate"
+        "network device unreachable",
+        "mgmt unreachable",
+        "console unreachable",
+        "122007",
+        "fault 122007",
+        "network switch unreachable",
+        "nvswitch",
+        "nv0",
+        "switch investigate",
+        "phynet",
+        "phynet debugger",
+        "devicereachability",
+        "inband oob",
+        "switch reseat",
+        "network device investigate"
       ],
       "steps": [
         "Verify the correct switch by matching rack label and device name to ticket. Observe front-panel LEDs.",
@@ -566,10 +803,20 @@
       "title": "Replace Network Device (Break/Fix - Same Model/FE)",
       "category": "network",
       "keywords": [
-        "replace network device", "network device replacement", "break fix network",
-        "fru replacement", "network fru", "replace switch", "replace router",
-        "cisco replace", "network device fru", "switch replacement", "router replacement",
-        "dbd verification", "locked rack", "hbi rack"
+        "replace network device",
+        "network device replacement",
+        "break fix network",
+        "fru replacement",
+        "network fru",
+        "replace switch",
+        "replace router",
+        "cisco replace",
+        "network device fru",
+        "switch replacement",
+        "router replacement",
+        "dbd verification",
+        "locked rack",
+        "hbi rack"
       ],
       "steps": [
         "Review ticket template, title, description, and instructions. Confirm task is Break/Fix FRU replacement of the same type or functional equivalent, verify the ticket is not a deployment or upgrade task.",
@@ -591,9 +838,17 @@
       "title": "Reboot / Power Cycle Network Device",
       "category": "network",
       "keywords": [
-        "power cycle", "reboot network device", "device power cycle", "network reboot",
-        "power cycle switch", "at will", "network device power", "device reboot",
-        "status lights green", "power on network", "cycle power"
+        "power cycle",
+        "reboot network device",
+        "device power cycle",
+        "network reboot",
+        "power cycle switch",
+        "at will",
+        "network device power",
+        "device reboot",
+        "status lights green",
+        "power on network",
+        "cycle power"
       ],
       "steps": [
         "Scrub the ticket to confirm scope of work. Review task history and verify no recent related or dependent tasks, network traffic is confirmed disabled prior to work, no work window is required, and device is approved for at-will work.",
@@ -611,9 +866,17 @@
       "title": "Breakfix: Investigation / General Troubleshooting",
       "category": "hardware",
       "keywords": [
-        "breakfix investigation", "breakfix troubleshooting", "general investigation",
-        "device investigation", "triage", "debug", "manual investigation ticket",
-        "investigate device", "breakfix", "general breakfix", "device general investigation"
+        "breakfix investigation",
+        "breakfix troubleshooting",
+        "general investigation",
+        "device investigation",
+        "triage",
+        "debug",
+        "manual investigation ticket",
+        "investigate device",
+        "breakfix",
+        "general breakfix",
+        "device general investigation"
       ],
       "steps": [
         "Scrub the ticket: identify ticket type, fault code, repair action, and confirm what you are expected to do before touching anything.",
